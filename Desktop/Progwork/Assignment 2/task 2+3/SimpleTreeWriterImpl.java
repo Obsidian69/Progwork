@@ -45,8 +45,7 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter {
 		}
 	}
 
-	private void writeLevel(int nodeSpacing, int labelWidth,
-			List<AVLTreeNode> level) {
+	private void writeLevel(int nodeSpacing, int labelWidth, List<AVLTreeNode> level) {
 		// final String leadingSpace = makeSpacing((nodeSpacing/2)*labelSize);
 		// final String interNodeSpace = makeSpacing(nodeSpacing*labelSize);
 		//

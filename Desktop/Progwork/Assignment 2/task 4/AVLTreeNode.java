@@ -15,7 +15,7 @@ public class AVLTreeNode {
 	private AVLTreeNode right;
 	private AVLTreeNode parent;
 	private int count;
-	private ArrayList<String> list=new ArrayList<String>();
+	private ArrayList<String> list = new ArrayList<String>();
 
 	public final static AVLTreeNode EMPTY_NODE = new AVLTreeNode();
 
@@ -39,8 +39,8 @@ public class AVLTreeNode {
 		this(null, key, value, null, null, 1);
 	}
 
-	private AVLTreeNode(AVLTreeNode left, Integer key, String value,
-			AVLTreeNode right, AVLTreeNode parent, int count) {
+	private AVLTreeNode(AVLTreeNode left, Integer key, String value, AVLTreeNode right,
+			AVLTreeNode parent, int count) {
 		assert (key != null);
 		this.left = left;
 		this.right = right;
@@ -48,7 +48,7 @@ public class AVLTreeNode {
 		this.value = value;
 		this.height = 0;
 		this.parent = parent;
-		this.count+=1;
+		this.count += 1;
 		this.setList(value);
 	}
 
@@ -80,13 +80,13 @@ public class AVLTreeNode {
 	public Integer getKey() {
 		return key;
 	}
-	public Integer getCount(){
+	public Integer getCount() {
 		return count;
 	}
 	/**
 	 * Obtain the height value stored at this node. (Requirs that ka
 	 */
-	public ArrayList<String> getList(){
+	public ArrayList<String> getList() {
 		return list;
 	}
 	public int getHeight() {
@@ -139,11 +139,11 @@ public class AVLTreeNode {
 	public void setParent(AVLTreeNode node) {
 		this.parent = node;
 	}
-	public void setCount(int num){
+	public void setCount(int num) {
 		assert (this != EMPTY_NODE);
-		this.count+=num;
+		this.count += num;
 	}
-	public void setList(String value){
+	public void setList(String value) {
 		list.add(value);
 	}
 	/**
@@ -184,13 +184,13 @@ public class AVLTreeNode {
 	 */
 	public String toString() {
 		String str = "\n";
-		for(String temp: this.getList()){
-			if(str.contains(temp)){
+		for (String temp : this.getList()) {
+			if (str.contains(temp)) {
 				continue;
 			}
-			str=str+temp+"\n";
+			str = str + temp + "\n";
 		}
-		return /* this.getKey().toString()+ */"(" + (value.charAt(0)+"").toUpperCase() + ")"+"("+count+")"+str;
+		return /* this.getKey().toString()+ */"(" + (value.charAt(0) + "").toUpperCase() + ")" + "(" + count + ")" + str;
 	}
 
 }

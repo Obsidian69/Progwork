@@ -35,10 +35,8 @@ public class TreeUtils {
 		List<AVLTreeNode> nextLevel = new ArrayList<AVLTreeNode>();
 
 		for (AVLTreeNode node : level) {
-			nextLevel.add(node.hasLeft() ? node.getLeft()
-					: AVLTreeNode.EMPTY_NODE);
-			nextLevel.add(node.hasRight() ? node.getRight()
-					: AVLTreeNode.EMPTY_NODE);
+			nextLevel.add(node.hasLeft() ? node.getLeft() : AVLTreeNode.EMPTY_NODE);
+			nextLevel.add(node.hasRight() ? node.getRight() : AVLTreeNode.EMPTY_NODE);
 		}
 		return nextLevel;
 	}

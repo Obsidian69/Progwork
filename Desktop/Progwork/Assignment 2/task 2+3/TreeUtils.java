@@ -35,10 +35,8 @@ public class TreeUtils {
 		List<AVLTreeNode> nextLevel = new ArrayList<AVLTreeNode>();
 
 		for (AVLTreeNode node : level) {
-			nextLevel.add(node.hasLeft() ? node.getLeft()
-					: AVLTreeNode.EMPTY_NODE);
-			nextLevel.add(node.hasRight() ? node.getRight()
-					: AVLTreeNode.EMPTY_NODE);
+			nextLevel.add(node.hasLeft() ? node.getLeft() : AVLTreeNode.EMPTY_NODE);
+			nextLevel.add(node.hasRight() ? node.getRight() : AVLTreeNode.EMPTY_NODE);
 		}
 		return nextLevel;
 	}
@@ -119,14 +117,12 @@ public class TreeUtils {
 					return null;
 				} else if (parent.getLeft() == node) {
 					parent.setLeft(null);
-					if (Math.abs(height(parent.getLeft())
-							- height(parent.getRight())) > 1) {
+					if (Math.abs(height(parent.getLeft()) - height(parent.getRight())) > 1) {
 						parent = rebalanceLeft(parent, key);
 					}
 				} else {
 					parent.setRight(null);
-					if (Math.abs(height(parent.getLeft())
-							- height(parent.getRight())) > 1) {
+					if (Math.abs(height(parent.getLeft()) - height(parent.getRight())) > 1) {
 						parent = rebalanceRight(parent, key);
 					}
 				}
@@ -141,14 +137,12 @@ public class TreeUtils {
 				}
 				if (parent.getLeft() == node) {
 					parent.setLeft(node.getRight());
-					if (Math.abs(height(parent.getLeft())
-							- height(parent.getRight())) > 1) {
+					if (Math.abs(height(parent.getLeft()) - height(parent.getRight())) > 1) {
 						parent = rebalanceLeft(parent, key);
 					}
 				} else {
 					parent.setRight(node.getRight());
-					if (Math.abs(height(parent.getLeft())
-							- height(parent.getRight())) > 1) {
+					if (Math.abs(height(parent.getLeft()) - height(parent.getRight())) > 1) {
 						parent = rebalanceRight(parent, key);
 					}
 				}
@@ -163,14 +157,12 @@ public class TreeUtils {
 				}
 				if (parent.getLeft() == node) {
 					parent.setLeft(node.getLeft());
-					if (Math.abs(height(parent.getLeft())
-							- height(parent.getRight())) > 1) {
+					if (Math.abs(height(parent.getLeft()) - height(parent.getRight())) > 1) {
 						parent = rebalanceLeft(parent, key);
 					}
 				} else {
 					parent.setRight(node.getLeft());
-					if (Math.abs(height(parent.getLeft())
-							- height(parent.getRight())) > 1) {
+					if (Math.abs(height(parent.getLeft()) - height(parent.getRight())) > 1) {
 						parent = rebalanceRight(parent, key);
 					}
 				}
@@ -200,12 +192,10 @@ public class TreeUtils {
 				}
 				if (parent == null) {
 
-				} else if (Math.abs(height(parent.getLeft())
-						- height(parent.getRight())) > 1) {
+				} else if (Math.abs(height(parent.getLeft()) - height(parent.getRight())) > 1) {
 					parent = rebalanceLeft(parent, key);
 				} else {
-					if (Math.abs(height(parent.getLeft())
-							- height(parent.getRight())) > 1) {
+					if (Math.abs(height(parent.getLeft()) - height(parent.getRight())) > 1) {
 						parent = rebalanceRight(parent, key);
 					}
 				}
