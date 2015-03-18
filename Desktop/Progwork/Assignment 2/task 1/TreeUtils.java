@@ -77,6 +77,8 @@ public class TreeUtils {
 		k2.setLeft(node_k1.getRight());// k2's new left is the right subtree of
 										// k1
 		node_k1.setRight(k2);// k1's new right child is k2
+		k2.setHeight(Math.max(height(k2.getLeft()),height(k2.getRight()) )+1);
+		node_k1.setHeight(Math.max(height(node_k1.getLeft()),height(node_k1.getRight()) )+1);
 		return node_k1;
 	}
 
@@ -84,6 +86,8 @@ public class TreeUtils {
 		AVLTreeNode node_k2 = k1.getRight();// reverse of above
 		k1.setRight(node_k2.getLeft());
 		node_k2.setLeft(k1);
+		k1.setHeight(Math.max(height(k1.getLeft()),height(k1.getRight()) )+1);
+		node_k2.setHeight(Math.max(height(node_k2.getLeft()),height(node_k2.getRight()) )+1);
 		return node_k2;
 	}
 

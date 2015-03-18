@@ -197,13 +197,13 @@ public class TreeUtils {
 					while (newNode.getLeft() != null) {
 						newNode = newNode.getLeft();
 					}
-					newNode.getParent().setLeft(null);
 					AVLTreeNode temp2 = node.getRight();
 					newNode.setParent(node.getParent());
 					newNode.setLeft(node.getLeft());
 					newNode.setHeight(node.getHeight());
 					newNode.getLeft().setParent(newNode);
 					newNode.setRight(temp2);
+					newNode.getParent().setLeft(null);
 					temp2.setParent(newNode);
 					if (node.getParent() == null) {
 						// no parent setting required

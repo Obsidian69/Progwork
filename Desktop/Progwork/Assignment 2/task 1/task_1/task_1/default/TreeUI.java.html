@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TreeUI.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">task 1 (18 Mar 2015 3:41:34 PM)</a> &gt; <a href="../../index.html" class="el_group">task 1</a> &gt; <a href="../index.html" class="el_bundle">task 1</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">TreeUI.java</span></div><h1>TreeUI.java</h1><pre class="source lang-java linenums">import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
+import java.io.File;
+import java.io.PrintStream;
+/**
+ * Command line program interface.
+ * 
+ * @author Stephan Jamieson
+ * @version 4/3/2015
+ */
+public class TreeUI {
+
+	private AVLTree target;
+
+	private Map&lt;String, Command&gt; commands;
+
+<span class="nc" id="L19">	public TreeUI() {</span>
+<span class="nc" id="L20">		commands = new HashMap&lt;String, Command&gt;();</span>
+<span class="nc" id="L21">		commands.put(&quot;new&quot;, new New());</span>
+<span class="nc" id="L22">		commands.put(&quot;help&quot;, new Help());</span>
+<span class="nc" id="L23">		commands.put(&quot;print&quot;, new Print());</span>
+<span class="nc" id="L24">		commands.put(&quot;contains&quot;, new Contains());</span>
+<span class="nc" id="L25">		commands.put(&quot;insert&quot;, new Insert());</span>
+<span class="nc" id="L26">		commands.put(&quot;quit&quot;, new Quit());</span>
+<span class="nc" id="L27">		commands.put(&quot;write&quot;, new Write());</span>
+<span class="nc" id="L28">		target = new AVLTree();</span>
+<span class="nc" id="L29">	}</span>
+
+	public void run() {
+<span class="nc" id="L32">		Scanner input = new Scanner(System.in);</span>
+<span class="nc" id="L33">		commands.get(&quot;help&quot;).execute(&quot;&quot;);</span>
+
+<span class="nc" id="L35">		while (true) {</span>
+<span class="nc" id="L36">			System.out.print(&quot;&gt;&quot;);</span>
+<span class="nc" id="L37">			Scanner line = new Scanner(input.nextLine());</span>
+
+<span class="nc bnc" id="L39" title="All 2 branches missed.">			String keyword = (line.hasNext() ? line.next().trim().toLowerCase() : &quot;&quot;);</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">			String argument = (line.hasNext() ? line.next() : &quot;&quot;);</span>
+
+<span class="nc bnc" id="L42" title="All 2 branches missed.">			if (commands.containsKey(keyword)) {</span>
+<span class="nc" id="L43">				commands.get(keyword).execute(argument);</span>
+<span class="nc" id="L44">			} else {</span>
+<span class="nc" id="L45">				System.out.println(&quot;Sorry, that command is not recognised. Type 'help' for assistance.&quot;);</span>
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+<span class="nc" id="L51">		(new TreeUI()).run();</span>
+<span class="nc" id="L52">	}</span>
+
+<span class="nc" id="L54">	private abstract class Command {</span>
+		public abstract String help();
+
+		public abstract void execute(String argument) throws IllegalArgumentException;
+
+	}
+
+<span class="nc" id="L61">	private class Write extends Command {</span>
+		/*
+		 * writes items to file.
+		 * 
+		 * @see TreeUI.Command#help()
+		 */
+		public String help() {
+<span class="nc" id="L68">			return &quot;write &lt;file name&gt;&quot;;</span>
+		}
+
+		public void execute(String argument) {
+			try {
+<span class="nc" id="L73">				target.print(new PrintStream(new File(argument)));</span>
+<span class="nc" id="L74">			} catch (Exception e) {</span>
+<span class="nc" id="L75">				System.out.println(&quot;Error: Tree is empty&quot;);</span>
+			}
+<span class="nc" id="L77">		}</span>
+	}
+<span class="nc" id="L79">	private class New extends Command {</span>
+		/*
+		 * creates new tree
+		 * 
+		 * @see TreeUI.Command#help()
+		 */
+		public String help() {
+<span class="nc" id="L86">			return &quot;new&quot;;</span>
+		}
+
+		public void execute(String argument) {
+<span class="nc" id="L90">			target = new AVLTree();</span>
+<span class="nc" id="L91">		}</span>
+	}
+
+<span class="nc" id="L94">	private class Insert extends Command {</span>
+		/*
+		 * inserts value into the tree
+		 * 
+		 * @see TreeUI.Command#help()
+		 */
+		public String help() {
+<span class="nc" id="L101">			return &quot;insert &lt;key value&gt;&quot;;</span>
+		}
+
+		public void execute(String argument) throws IllegalArgumentException {
+			try {
+
+<span class="nc" id="L107">				target.insert(Integer.parseInt(argument));</span>
+<span class="nc" id="L108">			} catch (NumberFormatException numFormE) {</span>
+<span class="nc" id="L109">				throw new IllegalArgumentException(&quot;Insert &quot; + argument + &quot; : argument not an integer.&quot;);</span>
+			}
+<span class="nc" id="L111">		}</span>
+
+	}
+
+<span class="nc" id="L115">	private class Print extends Command {</span>
+		/*
+		 * prints the tree
+		 * 
+		 * @see TreeUI.Command#help()
+		 */
+		public String help() {
+<span class="nc" id="L122">			return &quot;print&quot;;</span>
+		}
+
+		public void execute(String argument) {
+			try {
+<span class="nc" id="L127">				target.print(System.out);</span>
+<span class="nc" id="L128">			} catch (Exception e) {</span>
+<span class="nc" id="L129">				System.out.println(&quot;Error: Tree is empty&quot;);</span>
+			}
+<span class="nc" id="L131">		}</span>
+	}
+
+<span class="nc" id="L134">	private class Contains extends Command {</span>
+		/*
+		 * checks if a given value is in the tree
+		 * 
+		 * @see TreeUI.Command#help()
+		 */
+		public String help() {
+<span class="nc" id="L141">			return &quot;contains &lt;key value&gt;&quot;;</span>
+		}
+
+		public void execute(String argument) throws IllegalArgumentException {
+			try {
+<span class="nc bnc" id="L146" title="All 2 branches missed.">				String response = target.contains(Integer.parseInt(argument)) ? &quot;Yes&quot; : &quot;No&quot;;</span>
+<span class="nc" id="L147">				System.out.println(response);</span>
+<span class="nc" id="L148">			} catch (NumberFormatException numFormE) {</span>
+<span class="nc" id="L149">				throw new IllegalArgumentException(&quot;Insert &quot; + argument + &quot; : argument not an integer.&quot;);</span>
+			}
+<span class="nc" id="L151">		}</span>
+	}
+
+<span class="nc" id="L154">	private class Help extends Command {</span>
+		/*
+		 * runs the help commands of each document
+		 * 
+		 * @see TreeUI.Command#help()
+		 */
+		public String help() {
+<span class="nc" id="L161">			return &quot;help&quot;;</span>
+		}
+
+		public void execute(String argument) throws IllegalArgumentException {
+
+<span class="nc" id="L166">			Iterator&lt;String&gt; keywordIter = commands.keySet().iterator();</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			if (keywordIter.hasNext()) {</span>
+<span class="nc" id="L169">				System.out.print(&quot;Commands: &quot; + commands.get(keywordIter.next()).help());</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">				while (keywordIter.hasNext()) {</span>
+<span class="nc" id="L171">					System.out.print(&quot;, &quot; + commands.get(keywordIter.next()).help());</span>
+				}
+<span class="nc" id="L173">				System.out.println(&quot;.&quot;);</span>
+<span class="nc" id="L174">			} else {</span>
+<span class="nc" id="L175">				System.out.println(&quot;No commands installed.&quot;);</span>
+			}
+<span class="nc" id="L177">		}</span>
+	}
+
+<span class="nc" id="L180">	private class Quit extends Command {</span>
+		/*
+		 * ends program
+		 * 
+		 * @see TreeUI.Command#help()
+		 */
+		public String help() {
+<span class="nc" id="L187">			return &quot;quit&quot;;</span>
+		}
+
+		public void execute(String argument) throws IllegalArgumentException {
+<span class="nc" id="L191">			System.exit(0);</span>
+<span class="nc" id="L192">		}</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>task 1 (18 Mar 2015 3:41:34 PM)</div></body></html>

@@ -82,6 +82,8 @@ public class TreeUtils {
 		node_k1.setRight(k2);
 		k2.setParent(node_k1);
 		node_k1.setParent(temp);
+		k2.setHeight(Math.max(height(k2.getLeft()),height(k2.getRight()) )+1);
+		node_k1.setHeight(Math.max(height(node_k1.getLeft()),height(node_k1.getRight()) )+1);
 		return node_k1;
 	}
 
@@ -95,6 +97,8 @@ public class TreeUtils {
 		node_k2.setLeft(k1);
 		k1.setParent(node_k2);
 		node_k2.setParent(temp);
+		k1.setHeight(Math.max(height(k1.getLeft()),height(k1.getRight()) )+1);
+		node_k2.setHeight(Math.max(height(node_k2.getLeft()),height(node_k2.getRight()) )+1);
 		return node_k2;
 	}
 
@@ -172,9 +176,12 @@ public class TreeUtils {
 				return temp;
 			} else {
 				AVLTreeNode newNode = node.getRight();
+				boolean set=false;
 				while (newNode.getLeft() != null) {
 					newNode = newNode.getLeft();
+					set=true;
 				}
+				if (set){
 				newNode.getParent().setLeft(null);
 				AVLTreeNode temp2 = node.getRight();
 				newNode.setParent(node.getParent());
@@ -183,6 +190,11 @@ public class TreeUtils {
 				newNode.getLeft().setParent(newNode);
 				newNode.setRight(temp2);
 				temp2.setParent(newNode);
+				}
+				else{
+				newNode.setParent(node.getParent());
+				newNode.setLeft(node.getLeft());
+				}
 				if (node.getParent() == null) {
 					// no parent setting required
 				} else if (node.getParent().getRight() == node) {

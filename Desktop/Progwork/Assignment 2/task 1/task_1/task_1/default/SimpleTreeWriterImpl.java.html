@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SimpleTreeWriterImpl.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">task 1 (18 Mar 2015 3:41:34 PM)</a> &gt; <a href="../../index.html" class="el_group">task 1</a> &gt; <a href="../index.html" class="el_bundle">task 1</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">SimpleTreeWriterImpl.java</span></div><h1>SimpleTreeWriterImpl.java</h1><pre class="source lang-java linenums">import java.io.PrintStream;
+import java.util.Iterator;
+import java.util.List;
+/**
+ * Write a description of class BinaryTreeNodePrintStream here.
+ * 
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+<span class="nc bnc" id="L10" title="All 2 branches missed.">public class SimpleTreeWriterImpl implements SimpleTreeWriter {</span>
+
+	private PrintStream output;
+
+<span class="nc" id="L14">	public SimpleTreeWriterImpl(PrintStream output) {</span>
+<span class="nc" id="L15">		this.setDestination(output);</span>
+<span class="nc" id="L16">	}</span>
+
+	public void setDestination(PrintStream output) {
+<span class="nc" id="L19">		this.output = output;</span>
+<span class="nc" id="L20">	}</span>
+
+	public void write(AVLTreeNode node) {
+		/*
+		 * given code
+		 */
+<span class="nc" id="L26">		List&lt;AVLTreeNode&gt; level = TreeUtils.levelZero(node);</span>
+<span class="nc" id="L27">		final int labelSize = node.getLargest().toString().length() * 2;</span>
+
+<span class="nc bnc" id="L29" title="All 2 branches missed.">		for (int levelNum = 0; levelNum &lt; node.getHeight(); levelNum++) {</span>
+<span class="nc" id="L30">			final int nodeSpacing = powerOf2(node.getHeight() - levelNum) - 1;</span>
+<span class="nc" id="L31">			writeLevel(nodeSpacing, labelSize, level);</span>
+<span class="nc" id="L32">			level = TreeUtils.nextLevel(level);</span>
+		}
+<span class="nc" id="L34">	}</span>
+
+	private void writeLevel(int nodeSpacing, int labelSize, List&lt;AVLTreeNode&gt; level) {
+		/*
+		 * given code
+		 */
+<span class="nc" id="L40">		final String leadingSpace = makeSpacing((nodeSpacing / 2) * labelSize);</span>
+<span class="nc" id="L41">		final String interNodeSpace = makeSpacing(nodeSpacing * labelSize);</span>
+
+<span class="nc" id="L43">		Iterator&lt;AVLTreeNode&gt; iterator = level.iterator();</span>
+<span class="nc bnc" id="L44" title="All 4 branches missed.">		assert (iterator.hasNext());</span>
+
+<span class="nc" id="L46">		output.print(leadingSpace);</span>
+<span class="nc" id="L47">		writeNode(iterator.next(), labelSize);</span>
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		while (iterator.hasNext()) {</span>
+<span class="nc" id="L50">			output.print(interNodeSpace);</span>
+<span class="nc" id="L51">			writeNode(iterator.next(), labelSize);</span>
+		}
+<span class="nc" id="L53">		output.println();</span>
+<span class="nc" id="L54">	}</span>
+
+	private void writeNode(AVLTreeNode node, int labelSize) {
+<span class="nc" id="L57">		final String blankNode = makeSpacing(labelSize);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (TreeUtils.isPlaceHolder(node)) {</span>
+<span class="nc" id="L59">			output.printf(blankNode);</span>
+<span class="nc" id="L60">		} else {</span>
+			/*
+			 * edited the given code here to work with my code
+			 */
+<span class="nc" id="L64">			output.printf(&quot;%&quot; + labelSize + &quot;d&quot;, node.getKey());</span>
+<span class="nc" id="L65">			output.printf(node.toString(), null);</span>
+		}
+<span class="nc" id="L67">	}</span>
+
+	private static int powerOf2(int power) {
+		/*
+		 * given code
+		 */
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (power == 0) {</span>
+<span class="nc" id="L74">			return 1;</span>
+		} else {
+<span class="nc" id="L76">			return 2 * powerOf2(power - 1);</span>
+		}
+	}
+
+	private static String makeSpacing(int size) {
+		/*
+		 * given code
+		 */
+<span class="nc" id="L84">		StringBuilder builder = new StringBuilder(size);</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">		while (size &gt; 0) {</span>
+<span class="nc" id="L86">			builder.append(' ');</span>
+<span class="nc" id="L87">			size--;</span>
+		}
+<span class="nc" id="L89">		return builder.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>task 1 (18 Mar 2015 3:41:34 PM)</div></body></html>

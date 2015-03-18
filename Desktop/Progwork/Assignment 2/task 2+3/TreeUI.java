@@ -79,9 +79,15 @@ public class TreeUI {
 
 		public void execute(String argument) throws IllegalArgumentException {
 			try {
+					
+				if (Character.isDigit(argument.charAt(0))){
+					target.delete(Integer.parseInt(argument), argument);
+				}
+				else{
 				char c = argument.toUpperCase().charAt(0);
 
-				target.delete((int) c - 64, argument);
+				target.delete((int) c - 99, argument);
+				}
 			} catch (Exception e) {
 				System.out.println("Error: Tree does not contain " + argument);
 			}
@@ -105,9 +111,14 @@ public class TreeUI {
 
 		public void execute(String argument) throws IllegalArgumentException {
 			try {
+				if (Character.isDigit(argument.charAt(0))){
+					target.insert(Integer.parseInt(argument), argument);
+				}
+				else{
 				char c = argument.toUpperCase().charAt(0);
 
-				target.insert((int) c - 64, argument);
+				target.insert((int) c - 99, argument);
+				}
 			} catch (NumberFormatException numFormE) {
 				throw new IllegalArgumentException("Insert " + argument + " : argument not an integer.");
 			}
